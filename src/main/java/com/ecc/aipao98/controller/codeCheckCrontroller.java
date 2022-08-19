@@ -65,6 +65,15 @@ public class codeCheckCrontroller {
         if(sendCount>5){
             return R.error().message("---codeCheckCrontroller.codeImageCheck-获取验证码已达每天的上限。。。");
         }
+        //判断该手机号是否已报名
+        int phoneCount = signupDetailDao.checkPhone(resultMap.get("phone"));
+        if(phoneCount>0){
+            //清除session域中的图片验证码
+            request.getSession().removeAttribute(resultMap.get("sessionCode"));
+            //清除session域中的来源省份id
+            request.getSession().removeAttribute(resultMap.get("provinceId"));
+            return R.error().message("该手机号："+resultMap.get("phone")+"--已报名");
+        }
         //生成验证码
         int messageCode= (int) ((Math.random()*9+1)*1000);
         //request.getSession().setAttribute("phonecode:"+phone,messageCode);
