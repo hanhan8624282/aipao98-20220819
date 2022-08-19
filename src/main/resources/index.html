@@ -148,17 +148,20 @@
                     },
                     success:function (result){
                         console.log(result);
-                        var self = $(this);
-                        countdown(self);
+                  /*      var self = $(this);
+                        countdown(self);*/
                         const message=result.message;
                         const code=result.code;
                         if(code!=0){
-                            alert(result.message)
+                            alert(result.message);
+                            $(".float_wrapper").hide();
                         }
-                        $(".bt_btn_wrapper span.fr").click(function(){
+                        else{
                             $("#verification").hide();
                             $("#v_success").show();
-                        });
+                        }
+
+
                     }
                 })
             }else{
